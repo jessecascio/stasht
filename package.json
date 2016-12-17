@@ -1,6 +1,6 @@
 {
   "name": "stasht",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript Data Structures",
   "scripts": {
     "mock": "ts-node run.ts",
@@ -14,8 +14,8 @@
   "devDependencies": {
     "chai": "^3.5.0"
   },
-  "repository" : { 
-    "type" : "git",
-    "url" : "https://github.com/jessecascio/stasht"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jessecascio/stasht"
   }
 }
