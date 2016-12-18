@@ -2,7 +2,7 @@
   "name": "stasht",
   "version": "0.1.2",
   "description": "TypeScript Data Structures",
-  "main": "lib/index",
+  "main": "lib/stasht",
   "scripts": {
     "mock": "ts-node run.ts",
     "test": "npm run compile && mocha test.js",
