@@ -1,2 +1,2 @@
 
-var stasht = require('stasht');
+var stasht = require('stasht').bst;
