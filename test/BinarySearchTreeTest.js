@@ -1,9 +1,9 @@
 "use strict";
 
 const assert = require('chai').assert;
-const BinarySearchTree = require('./lib/BinarySearchTree');
+const BinarySearchTree = require('./../lib/stasht').BinarySearchTree;
 
-const bst = new BinarySearchTree.default();
+const bst = new BinarySearchTree();
 
 describe("binary search tree", () => {
   beforeEach(() => {
@@ -115,13 +115,4 @@ describe("binary search tree", () => {
     assert.equal(bst.size(), 7);
   });
 });
-
-/*
-    side notes
-    var a = new Array();
-    a['ass'] = 'footer';
-    console.log(typeof a); === object
-    console.log(a.length); === 0
-
-*/
  

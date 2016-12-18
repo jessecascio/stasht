@@ -4,8 +4,8 @@
   "description": "TypeScript Data Structures",
   "main": "lib/stasht",
   "scripts": {
-    "mock": "ts-node run.ts",
-    "test": "npm run compile && mocha test.js",
+    "mock": "ts-node src/mock.ts",
+    "test": "npm run compile && mocha --recursive test",
     "compile": "npm run compile:init && npm run compile:ts",
     "compile:init": "rm -rf lib && mkdir lib",
     "compile:ts": "tsc",

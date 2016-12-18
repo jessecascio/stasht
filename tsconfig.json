@@ -7,7 +7,9 @@
     "outDir": "lib"
   },
   "exclude": [
-    "src/run.ts",
-    "node_modules"
+    "src/mock.ts",
+    "node_modules",
+    "test",
+    "lib"
   ]
 }
