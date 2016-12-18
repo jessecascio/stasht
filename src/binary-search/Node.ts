@@ -1,4 +1,7 @@
 
+/**
+ * node for free
+ */
 export default class Node<K,V>
 {
   public left: Node<K,V>;
@@ -8,9 +11,9 @@ export default class Node<K,V>
   public key: K;
   public value: V;
 
-  constructor(key:K, value:V, size:number) {
+  constructor(key:K, value:V) {
     this.key = key;
     this.value = value;
-    this.size = size;
+    this.size = 1;
   }
 }

@@ -15,7 +15,12 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
-    "typescript": "^2.1.4"
+    "eslint": "^3.10.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.8.0",
+    "typescript": "^2.1.4",
+    "typescript-eslint-parser": "^1.0.0"
   },
   "repository": {
     "type": "git",
