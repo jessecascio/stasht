@@ -1,0 +1,2 @@
+
+var stasht = require('stasht');
