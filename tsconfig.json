@@ -5,9 +5,10 @@
     "removeComments": true,
     "sourceMap": true,
     "rootDir": "src/",
-    "outDir": "dist"
+    "outDir": "lib"
   },
   "exclude": [
-    "src/run.ts"
+    "src/run.ts",
+    "node_modules"
   ]
 }

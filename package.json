@@ -6,13 +6,15 @@
     "mock": "ts-node run.ts",
     "test": "npm run compile && mocha test.js",
     "compile": "npm run compile:init && npm run compile:ts",
-    "compile:init": "rm -rf dist && mkdir dist",
-    "compile:ts": "tsc"
+    "compile:init": "rm -rf lib && mkdir lib",
+    "compile:ts": "tsc",
+    "prepublish": "npm run compile"
   },
   "author": "Jesse Cascio",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "typescript": "^2.1.4"
   },
   "repository": {
     "type": "git",

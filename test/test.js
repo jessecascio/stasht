@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require('chai').assert;
-const BinarySearchTree = require('./dist/BinarySearchTree');
+const BinarySearchTree = require('./lib/BinarySearchTree');
 
 const bst = new BinarySearchTree.default();
 
