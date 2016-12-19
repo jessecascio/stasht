@@ -102,7 +102,9 @@ export default class Tree<K, V>
   }
 
   /**
-   * roud down to next key
+   * round down to next key
+   * @param key
+   * @return key
    */
   floor(key:K): K {
     const node = this._floor(this.root, key);
@@ -129,7 +131,7 @@ export default class Tree<K, V>
   }
 
   /**
-   * roud up to next key
+   * round up to next key
    */
   ceil(key:K): K {
     const node = this._ceil(this.root, key);
@@ -156,15 +158,27 @@ export default class Tree<K, V>
   }
 
   /**
-   * 
+   * find key with <selection> smaller keys
    */
   select(selection:number):K {
     const node = this._select(this.root, selection);
-    return node.key;
+    return node ? node.key : null;
   }
 
-  private _select(node:Node<K,V>, selection):Node<K,V> {
-    return node;
+  private _select(node:Node<K,V>, selection: number):Node<K,V> {
+    if (!node) {
+      return null;
+    }
+
+    const size = this._nodeSize(node.left);
+    
+    if (size > selection) {
+      return this._select(node.left, selection);
+    } else if (size < selection) {
+      return this._select(node.right, selection-size-1);
+    } else {
+      return node;
+    }
   }
 
   /**
@@ -183,6 +197,26 @@ export default class Tree<K, V>
     }
 
     node.left = this._deleteMin(node.left);
+    node.size = this._nodeSize(node.left) + this._nodeSize(node.right) + 1;
+    return node;
+  }
+
+  /**
+   * delete max key
+   */
+  deleteMax(): void {
+    this.root = this._deleteMax(this.root);
+  }
+
+  private _deleteMax(node:Node<K,V>): Node<K,V> {
+    if (!node) {
+      return null;
+    }
+    if (!node.right) {
+      return node.left;
+    }
+
+    node.right = this._deleteMax(node.right);
     node.size = this._nodeSize(node.left) + this._nodeSize(node.right) + 1;
     return node;
   }
@@ -236,7 +270,7 @@ export default class Tree<K, V>
    * @return number
    */
   size(): number {
-    return this.root.size;
+    return this.root ? this.root.size : 0;
   }
 
   /**
@@ -247,14 +281,14 @@ export default class Tree<K, V>
   }
 
   /**
-   * array representation of tree, keys ordered ASC
-   * @return array || object
+   * object representation of tree, keys ordered ASC
+   * @return object
    */
-  toArray():Array<V> {
-    return this._traverse(this.root, new Array<V>());
+  json():Object {
+    return this._traverse(this.root, new Object());
   }
 
-  private _traverse(node:Node<K,V>, data:Array<V>): Array<V> {
+  private _traverse(node:Node<K,V>, data: Object): Object {
     if (!node) {
       return data;
     }
@@ -276,9 +310,7 @@ export default class Tree<K, V>
   }
 
 /**
-  * select()
   * rank()
-  * deleteMax()
   * keys()
   * range() - query
 */

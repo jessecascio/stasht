@@ -46,6 +46,10 @@ describe("Binary Search Tree", () => {
 
       assert.equal(bst.size(), 2);
     });
+
+    it ("should return zero on empty tree", () => {
+      assert.equal(bst.size(), 0);
+    });
   });
 
   describe("#max", () => {
@@ -89,7 +93,7 @@ describe("Binary Search Tree", () => {
     it ("should find a deep floor", () => {
       bst.put('s', 2);
       bst.put('e', 1);
-      bst.put('x', 8);
+      bst.put('y', 8);
       bst.put('a', 8);
       bst.put('r', 8);
       bst.put('c', 8);
@@ -117,7 +121,7 @@ describe("Binary Search Tree", () => {
     it ("should find a deep ceil", () => {
       bst.put('s', 2);
       bst.put('e', 1);
-      bst.put('x', 8);
+      bst.put('y', 8);
       bst.put('a', 8);
       bst.put('r', 8);
       bst.put('c', 8);
@@ -136,7 +140,7 @@ describe("Binary Search Tree", () => {
     it ("should delete min value", () => {
       bst.put('s', 2);
       bst.put('e', 1);
-      bst.put('x', 8);
+      bst.put('y', 8);
       bst.put('a', 8);
       bst.put('r', 8);
       bst.put('c', 8);
@@ -167,11 +171,46 @@ describe("Binary Search Tree", () => {
     });
   });
   
+  describe("#deleteMax", () => {
+    it ("should delete max value", () => {
+      bst.put('s', 2);
+      bst.put('e', 1);
+      bst.put('y', 8);
+      bst.put('a', 8);
+      bst.put('r', 8);
+      bst.put('c', 8);
+      bst.put('h', 8);
+      bst.put('m', 8);
+
+      assert.equal(bst.max(), 'y');
+      bst.deleteMax();
+      assert.equal(bst.get('y'), null);
+
+      assert.equal(bst.max(), 's');
+      bst.deleteMax();
+      assert.equal(bst.get('s'), null);
+
+      assert.equal(bst.max(), 'r');
+    });
+
+    it ("update size after deletion", () => {
+      bst.put('h', 8);
+      bst.put('m', 8);
+      bst.deleteMax();
+      assert.equal(bst.get('m'), null);
+      assert.equal(bst.size(), 1);
+    });
+
+    it ("should not crash on empty tree", () => {
+      assert.equal(bst.deleteMax(), undefined);
+    });
+  });
+
   describe("#delete", () => {
     it ("should delete a value", () => {
       bst.put('s', 2);
       bst.put('e', 1);
-      bst.put('x', 8);
+      bst.put('y', 8);
       bst.put('a', 8);
       bst.put('r', 8);
       bst.put('c', 8);
@@ -197,6 +236,53 @@ describe("Binary Search Tree", () => {
       assert.equal(bst.delete(), undefined);
     });
   });
-  
+
+  describe("#select", () => {
+    it ("should return null on empty tree", () => {
+      assert.equal(bst.select(4), null);
+    });
+
+    it ("should find correct selection", () => {
+      bst.put('s', 2);
+      bst.put('e', 1);
+      bst.put('y', 8);
+      bst.put('a', 8);
+      bst.put('r', 8);
+      bst.put('c', 8);
+      bst.put('h', 8);
+      bst.put('m', 8);
+
+      assert.equal(bst.select(3), 'h');
+    });
+  });
+
+  describe("#json", () => {
+    it ("should return a valid JSON object", () => {
+      bst.put('whoop', 7);
+      const json = bst.json();
+      const str = JSON.stringify(json);
+      const obj = JSON.parse(str);
+      assert.isTrue(typeof obj === 'object');
+    });
+
+    it ("should return tree as an object", () => {
+      bst.put('whoop', 7);
+      const json = bst.json();
+      assert.equal(json.whoop, 7);
+    });
+
+    it ("should return object keys in order", () => {
+      bst.put('whoop', 7);
+      bst.put('ally', 32);
+      bst.put('pbr', 3);
+
+      const json = bst.json();
+      const keys = Object.keys(json);
+
+      assert.equal(keys.length, 3);
+      assert.equal(keys[0], 'ally');
+      assert.equal(keys[2], 'whoop');
+    });
+  });
 });
  

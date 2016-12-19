@@ -1,6 +1,6 @@
 
 /**
- * node for free
+ * node for tree
  */
 export default class Node<K,V>
 {
