@@ -256,6 +256,29 @@ describe("Binary Search Tree", () => {
     });
   });
 
+  describe("#rank", () => {
+    it ("should return zero on empty tree", () => {
+      assert.equal(bst.rank('3'), 0);
+    });
+
+    it ("should find correct ranks", () => {
+      bst.put('a', 8);
+      bst.put('c', 8);
+      bst.put('e', 1);
+      bst.put('h', 8);
+      bst.put('m', 8);
+      bst.put('r', 8);
+      bst.put('s', 2);
+      bst.put('y', 8);
+      
+      assert.equal(bst.rank('h'), 3);
+      assert.equal(bst.rank('y'), 7);
+      assert.equal(bst.rank('a'), 0);
+      assert.equal(bst.rank('z'), 8);
+      assert.equal(bst.rank('n'), 5);
+    });
+  });
+
   describe("#json", () => {
     it ("should return a valid JSON object", () => {
       bst.put('whoop', 7);
@@ -282,6 +305,67 @@ describe("Binary Search Tree", () => {
       assert.equal(keys.length, 3);
       assert.equal(keys[0], 'ally');
       assert.equal(keys[2], 'whoop');
+    });
+  });
+
+  describe("#keys", () => {
+    it ("should return an array of keys", () => {
+      bst.put('whoop', 7);
+      bst.put('thur', 5);
+
+      const keys = bst.keys();
+      assert.isTrue(Array.isArray(keys));
+    });
+
+    it ("should return all keys", () => {
+      bst.put('whoop', 7);
+      bst.put('thur', 5);
+
+      const keys = bst.keys();
+      assert.equal(keys.length, 2);
+    });
+
+    it ("should return correct keys ordered", () => {
+      bst.put('whoop', 7);
+      bst.put('thur', 5);
+
+      const keys = bst.keys();
+      assert.equal(keys[0], 'thur');
+      assert.equal(keys[1], 'whoop');
+    });
+  });
+
+   describe("#range", () => {
+    it ("should return an array of keys", () => {
+      bst.put('whoop', 7);
+      bst.put('thur', 5);
+
+      const keys = bst.range();
+      assert.isTrue(Array.isArray(keys));
+    });
+
+    it ("should return all keys within range", () => {
+      bst.put('whoop', 7);
+      bst.put('mill', 5);
+
+      let keys = bst.range('a', 'z');
+      assert.equal(keys.length, 2);
+
+      keys = bst.range('a', 'p');
+      assert.equal(keys.length, 1);
+    });
+
+    it ("should allow for null start/end", () => {
+      bst.put('whoop', 7);
+      bst.put('thur', 5);
+      bst.put('fri', 5);
+      bst.put('abc', 5);
+
+      let keys = bst.range('c');
+      assert.equal(keys.length, 3);
+
+      keys = bst.range(null, 'm');
+      assert.equal(keys.length, 2);
     });
   });
 });

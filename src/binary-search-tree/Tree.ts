@@ -182,6 +182,27 @@ export default class Tree<K, V>
   }
 
   /**
+   * return number of keys less than rank
+   */
+  rank(rank:K): number {
+    return this._rank(this.root, rank);
+  }
+
+  private _rank(node: Node<K,V>, rank: K):number {
+    if (!node) {
+      return 0;
+    }
+
+    if (node.key > rank) {
+      return this._rank(node.left, rank);
+    } else if (node.key < rank) {
+      return 1 + this._nodeSize(node.left) + this._rank(node.right, rank);
+    } else {
+      return this._nodeSize(node.left);
+    }
+  }
+
+  /**
    * delete min key
    */
   deleteMin(): void {
@@ -281,21 +302,81 @@ export default class Tree<K, V>
   }
 
   /**
-   * object representation of tree, keys ordered ASC
-   * @return object
+   * return an array of node keys
+   * @return array
    */
-  json():Object {
-    return this._traverse(this.root, new Object());
+  keys(): Array<K> {
+    const data = this._inorderKeyTraversal(this.root, new Array<K>());
+    return data;
+  }
+  
+  /**
+   * return an array of node keys with a range
+   * @return array
+   */
+  range(start?: K, end?: K): Array<K> {
+    const data = this._inorderKeyTraversal(this.root, new Array<K>(), start, end);
+    return data;
   }
 
-  private _traverse(node:Node<K,V>, data: Object): Object {
+  private _inorderKeyTraversal(node:Node<K,V>, data: Array<K>, start?:K, end?:K): Array<K> {
     if (!node) {
       return data;
     }
 
-    this._traverse(node.left, data);
+    // get all keys
+    if (!start && !end) {
+      this._inorderKeyTraversal(node.left, data);
+      data.push(node.key);
+      this._inorderKeyTraversal(node.right, data);
+      return data;
+    }
+    
+    // only traverse necessary branches
+    if (!start || (node.key > start )) {
+      this._inorderKeyTraversal(node.left, data, start, end);
+    }
+
+    // store keys within range
+    if (start && end) {
+      if (node.key >= start && node.key <= end) {
+        data.push(node.key);
+      }
+    } else if (start && !end) {
+      if (node.key >= start) {
+        data.push(node.key)
+      }
+    } else if (!start && end) {
+      if (node.key <= end) {
+        data.push(node.key)
+      }
+    }
+
+    // only traverse necessary branches
+    if (!end || (node.key < end)) {
+      this._inorderKeyTraversal(node.right, data, start, end);
+    }
+
+    return data;
+  }
+
+  /**
+   * object representation of tree, keys ordered ASC
+   * @return object
+   */
+  json():Object {
+    return this._traverseJSON(this.root, new Object());
+  }
+  
+  // inorder traversal
+  private _traverseJSON(node:Node<K,V>, data: Object): Object {
+    if (!node) {
+      return data;
+    }
+
+    this._traverseJSON(node.left, data);
     data[String(node.key)] = node.value;
-    this._traverse(node.right, data);
+    this._traverseJSON(node.right, data);
 
     return data;
   }
@@ -308,11 +389,5 @@ export default class Tree<K, V>
   private _nodeSize(node: Node<K,V>): number {
     return node ? node.size : 0;
   }
-
-/**
-  * rank()
-  * keys()
-  * range() - query
-*/
 }
   

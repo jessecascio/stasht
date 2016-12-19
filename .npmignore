@@ -3,3 +3,4 @@ src
 .gitignore
 **/*.map
 tsconfig.json
+lib/mock.js
