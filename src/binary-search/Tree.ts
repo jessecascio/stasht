@@ -256,17 +256,12 @@ export default class Tree<K, V>
       return null;
     }
 
-    let equal = true;
-
     if (node.key > key) {
-      equal = false;
       node.left = this._delete(node.left, key);
+      node.size = this._nodeSize(node.left) + this._nodeSize(node.right) + 1;
+      return node;
     } else if (node.key < key) {
-      equal = false;
       node.right = this._delete(node.right, key);
-    }
-
-    if (!equal) {
       node.size = this._nodeSize(node.left) + this._nodeSize(node.right) + 1;
       return node;
     }
@@ -279,11 +274,56 @@ export default class Tree<K, V>
       return node.right;
     }
 
-    let successor = this._min(node.right);
+    // let successor = this._min(node.right);
+    let successor = this._successor(node, node.key);
     successor.right = this._deleteMin(successor);
     successor.left = node.left;
     successor.size = this._nodeSize(successor.left) + this._nodeSize(successor.right) + 1;
     return successor;
+  }
+
+  /**
+   * find the next largest node
+   */
+  successor(key:K): K {
+    const node = this._successor(this.root, key);
+    return node ? node.key : null;
+  }
+
+  private _successor(node:Node<K,V>, key:K): Node<K,V> {
+    if (!node) {
+      return null;
+    }
+
+    if (node.key > key) {
+      return this._successor(node.left, key) || node;
+    } else if (node.key < key) {
+      return this._successor(node.right, key);
+    }
+
+    return this._min(node.right);
+  }
+
+  /**
+   * find the next smallest node
+   */
+  predecessor(key:K): K {
+    const node = this._predecessor(this.root, key);
+    return node ? node.key : null;
+  }
+
+  private _predecessor(node:Node<K,V>, key:K): Node<K,V> {
+    if (!node) {
+      return null;
+    }
+
+    if (node.key > key) {
+      return this._predecessor(node.left, key);
+    } else if (node.key < key) {
+      return this._predecessor(node.right, key) || node;
+    }
+
+    return this._max(node.left);
   }
 
   /**
@@ -338,21 +378,14 @@ export default class Tree<K, V>
     }
 
     // store keys within range
-    if (start && end) {
-      if (node.key >= start && node.key <= end) {
-        data.push(node.key);
-      }
-    } else if (start && !end) {
-      if (node.key >= start) {
-        data.push(node.key)
-      }
-    } else if (!start && end) {
-      if (node.key <= end) {
-        data.push(node.key)
-      }
+    if ((start && end) && (node.key >= start && node.key <= end)) {
+      data.push(node.key);
+    } else if ((start && !end) && (node.key >= start)) {
+      data.push(node.key)
+    } else if ((!start && end) && (node.key <= end)) {
+      data.push(node.key)
     }
 
-    // only traverse necessary branches
     if (!end || (node.key < end)) {
       this._inorderKeyTraversal(node.right, data, start, end);
     }

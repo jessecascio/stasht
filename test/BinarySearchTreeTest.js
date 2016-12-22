@@ -8,145 +8,100 @@ const bst = new BinarySearchTree();
 describe("Binary Search Tree", () => {
   beforeEach(() => {
     bst.reset();
+    bst.put('s', 2);
+    bst.put('e', 1);
+    bst.put('y', 8);
+    bst.put('a', 8);
+    bst.put('r', 8);
+    bst.put('c', 8);
+    bst.put('h', 8);
+    bst.put('m', 8);
   });
 
   describe("#put", () => {
     it ("should be able to put key/value pairs", () => {
-      bst.put('c', 2);
-      assert.equal(bst.get('c'), 2);
+      bst.put('j', 2);
+      assert.equal(bst.get('j'), 2);
     });
 
     it ("should update existing keys", () => {
-      bst.put('c', 2);
-      bst.put('c', 12);
+      bst.put('j', 2);
+      bst.put('j', 12);
 
-      assert.equal(bst.get('c'), 12);
+      assert.equal(bst.get('j'), 12);
     });
   });
 
   describe("#get", () => {
     it ("should be able to get a key", () => {
-      bst.put('c', 2);
-      bst.put('z', 1);
-      bst.put('a', 8);
-
-      assert.equal(bst.get('z'), 1);
+      assert.equal(bst.get('m'), 8);
     });
 
     it ("should return null on not found", () => {
-      bst.put('c', 2);
-      assert.equal(bst.get('z'), null);
+      assert.equal(bst.get('q'), null);
     });
   });
 
   describe("#size", () => {
     it ("should be able to determine correct size", () => {
-      bst.put('c', 2);
-      bst.put('e', 2);
-
-      assert.equal(bst.size(), 2);
+      assert.equal(bst.size(), 8);
     });
 
     it ("should return zero on empty tree", () => {
+      bst.reset();
       assert.equal(bst.size(), 0);
     });
   });
 
   describe("#max", () => {
     it ("should be able to find max key", () => {
-      bst.put('c', 2);
-      bst.put('z', 1);
-      bst.put('a', 8);
-
-      assert.equal(bst.max(), 'z');
+      assert.equal(bst.max(), 'y');
     });
 
     it ("should return null for empty tree", () => {
+      bst.reset();
       assert.equal(bst.max(), null);
     });
   });
 
   describe("#min", () => {
     it ("should be able to find min key", () => {
-      bst.put('c', 2);
-      bst.put('z', 1);
-      bst.put('a', 8);
-
       assert.equal(bst.min(), 'a');
     });
 
     it ("should return null for empty tree", () => {
+      bst.reset();
       assert.equal(bst.min(), null);
     });
   });
 
   describe("#floor", () => {
     it ("should be able to find floor", () => {
-      bst.put('c', 2);
-      bst.put('z', 1);
-      bst.put('a', 8);
-
       assert.equal(bst.floor('b'), 'a');
       assert.equal(bst.floor('c'), 'c');
-    });
-
-    it ("should find a deep floor", () => {
-      bst.put('s', 2);
-      bst.put('e', 1);
-      bst.put('y', 8);
-      bst.put('a', 8);
-      bst.put('r', 8);
-      bst.put('c', 8);
-      bst.put('h', 8);
-      bst.put('m', 8);
-
       assert.equal(bst.floor('g'), 'e');
     });
 
     it ("should return null for empty tree", () => {
-      assert.equal(bst.floor(), null);
+      bst.reset();
+      assert.equal(bst.floor('j'), null);
     });
   });
 
   describe("#ceil", () => {
     it ("should be able to find ceil", () => {
-      bst.put('c', 2);
-      bst.put('z', 1);
-      bst.put('a', 8);
-
-      assert.equal(bst.ceil('b'), 'c');
       assert.equal(bst.ceil('c'), 'c');
-    });
-
-    it ("should find a deep ceil", () => {
-      bst.put('s', 2);
-      bst.put('e', 1);
-      bst.put('y', 8);
-      bst.put('a', 8);
-      bst.put('r', 8);
-      bst.put('c', 8);
-      bst.put('z', 8);
-      bst.put('m', 8);
-
-      assert.equal(bst.ceil('g'), 'm');
+      assert.equal(bst.ceil('d'), 'e');
     });
 
     it ("should return null for empty tree", () => {
-      assert.equal(bst.ceil(), null);
+      bst.reset();
+      assert.equal(bst.ceil('j'), null);
     });
   });
 
   describe("#deleteMin", () => {
     it ("should delete min value", () => {
-      bst.put('s', 2);
-      bst.put('e', 1);
-      bst.put('y', 8);
-      bst.put('a', 8);
-      bst.put('r', 8);
-      bst.put('c', 8);
-      bst.put('h', 8);
-      bst.put('m', 8);
-
       assert.equal(bst.min(), 'a');
       bst.deleteMin();
       assert.equal(bst.get('a'), null);
@@ -159,29 +114,19 @@ describe("Binary Search Tree", () => {
     });
 
     it ("update size after deletion", () => {
-      bst.put('h', 8);
-      bst.put('m', 8);
       bst.deleteMin();
-      assert.equal(bst.get('h'), null);
-      assert.equal(bst.size(), 1);
+      assert.equal(bst.get('a'), null);
+      assert.equal(bst.size(), 7);
     });
 
     it ("should not crash on empty tree", () => {
+      bst.reset();
       assert.equal(bst.deleteMin(), undefined);
     });
   });
   
   describe("#deleteMax", () => {
     it ("should delete max value", () => {
-      bst.put('s', 2);
-      bst.put('e', 1);
-      bst.put('y', 8);
-      bst.put('a', 8);
-      bst.put('r', 8);
-      bst.put('c', 8);
-      bst.put('h', 8);
-      bst.put('m', 8);
-
       assert.equal(bst.max(), 'y');
       bst.deleteMax();
       assert.equal(bst.get('y'), null);
@@ -194,83 +139,76 @@ describe("Binary Search Tree", () => {
     });
 
     it ("update size after deletion", () => {
-      bst.put('h', 8);
-      bst.put('m', 8);
       bst.deleteMax();
-      assert.equal(bst.get('m'), null);
-      assert.equal(bst.size(), 1);
+      assert.equal(bst.get('y'), null);
+      assert.equal(bst.size(), 7);
     });
 
     it ("should not crash on empty tree", () => {
+      bst.reset();
       assert.equal(bst.deleteMax(), undefined);
     });
   });
 
   describe("#delete", () => {
     it ("should delete a value", () => {
-      bst.put('s', 2);
-      bst.put('e', 1);
-      bst.put('y', 8);
-      bst.put('a', 8);
-      bst.put('r', 8);
-      bst.put('c', 8);
-      bst.put('h', 8);
-      bst.put('m', 8);
-
       assert.equal(bst.size(), 8);
       assert.equal(bst.get('c'), 8);
       bst.delete('c');
       
       assert.equal(bst.get('c'), null);
+    });
+
+    it ("should update tree size after deletion", () => {
+      bst.delete('m')
       assert.equal(bst.size(), 7);
     });
 
-    it ("should return update size after deletion", () => {
-      bst.put('h', 8);
-      bst.put('m', 8);
-      bst.delete('m')
-      assert.equal(bst.size(), 1);
+    it ("should not crash on empty tree", () => {
+      bst.reset();
+      assert.equal(bst.delete(), undefined);
     });
 
-    it ("should not crash on empty tree", () => {
-      assert.equal(bst.delete(), undefined);
+     it ("should delete max value", () => {
+      bst.delete('y');
+      assert.equal(bst.size(), 7);
+    });
+
+    it ("should delete min value", () => {
+      bst.delete('a');
+      assert.equal(bst.size(), 7);
+    });
+
+    it ("should delete root", () => {
+      bst.delete('s');
+      assert.equal(bst.size(), 7);
+    });
+
+    it ("should handle out of bounds deletions", () => {
+      bst.delete('z');
+      bst.delete('A');
+      assert.equal(bst.size(), 8);
     });
   });
 
   describe("#select", () => {
     it ("should return null on empty tree", () => {
+      bst.reset();
       assert.equal(bst.select(4), null);
     });
 
     it ("should find correct selection", () => {
-      bst.put('s', 2);
-      bst.put('e', 1);
-      bst.put('y', 8);
-      bst.put('a', 8);
-      bst.put('r', 8);
-      bst.put('c', 8);
-      bst.put('h', 8);
-      bst.put('m', 8);
-
       assert.equal(bst.select(3), 'h');
     });
   });
 
   describe("#rank", () => {
     it ("should return zero on empty tree", () => {
+      bst.reset();
       assert.equal(bst.rank('3'), 0);
     });
 
     it ("should find correct ranks", () => {
-      bst.put('a', 8);
-      bst.put('c', 8);
-      bst.put('e', 1);
-      bst.put('h', 8);
-      bst.put('m', 8);
-      bst.put('r', 8);
-      bst.put('s', 2);
-      bst.put('y', 8);
-      
       assert.equal(bst.rank('h'), 3);
       assert.equal(bst.rank('y'), 7);
       assert.equal(bst.rank('a'), 0);
@@ -295,77 +233,95 @@ describe("Binary Search Tree", () => {
     });
 
     it ("should return object keys in order", () => {
-      bst.put('whoop', 7);
-      bst.put('ally', 32);
-      bst.put('pbr', 3);
-
       const json = bst.json();
       const keys = Object.keys(json);
 
-      assert.equal(keys.length, 3);
-      assert.equal(keys[0], 'ally');
-      assert.equal(keys[2], 'whoop');
+      assert.equal(keys.length, 8);
+      assert.equal(keys[0], 'a');
+      assert.equal(keys[2], 'e');
     });
   });
 
   describe("#keys", () => {
     it ("should return an array of keys", () => {
-      bst.put('whoop', 7);
-      bst.put('thur', 5);
-
       const keys = bst.keys();
       assert.isTrue(Array.isArray(keys));
     });
 
     it ("should return all keys", () => {
-      bst.put('whoop', 7);
-      bst.put('thur', 5);
-
       const keys = bst.keys();
-      assert.equal(keys.length, 2);
+      assert.equal(keys.length, 8);
     });
 
     it ("should return correct keys ordered", () => {
-      bst.put('whoop', 7);
-      bst.put('thur', 5);
-
       const keys = bst.keys();
-      assert.equal(keys[0], 'thur');
-      assert.equal(keys[1], 'whoop');
+      assert.equal(keys[0], 'a');
+      assert.equal(keys[1], 'c');
+      assert.equal(keys[7], 'y');
     });
   });
 
-   describe("#range", () => {
+  describe("#range", () => {
     it ("should return an array of keys", () => {
-      bst.put('whoop', 7);
-      bst.put('thur', 5);
-
       const keys = bst.range();
       assert.isTrue(Array.isArray(keys));
     });
 
     it ("should return all keys within range", () => {
-      bst.put('whoop', 7);
-      bst.put('mill', 5);
-
       let keys = bst.range('a', 'z');
-      assert.equal(keys.length, 2);
+      assert.equal(keys.length, 8);
 
       keys = bst.range('a', 'p');
-      assert.equal(keys.length, 1);
+      assert.equal(keys.length, 5);
     });
 
     it ("should allow for null start/end", () => {
-      bst.put('whoop', 7);
-      bst.put('thur', 5);
-      bst.put('fri', 5);
-      bst.put('abc', 5);
-
       let keys = bst.range('c');
-      assert.equal(keys.length, 3);
+      assert.equal(keys.length, 7);
 
       keys = bst.range(null, 'm');
-      assert.equal(keys.length, 2);
+      assert.equal(keys.length, 5);
+    });
+  });
+
+  describe("#successor", () => {
+    it ("should return a successor node", () => {
+      assert.equal(bst.successor('a'), 'c');
+      assert.equal(bst.successor('c'), 'e');
+      assert.equal(bst.successor('e'), 'h');
+      assert.equal(bst.successor('h'), 'm');
+      assert.equal(bst.successor('m'), 'r');
+      assert.equal(bst.successor('r'), 's');
+      assert.equal(bst.successor('s'), 'y');
+      assert.equal(bst.successor('y'), null);
+    });
+
+    it ("should return a successor for phantom node", () => {
+      assert.equal(bst.successor('b'), 'c');
+      assert.equal(bst.successor('n'), 'r');
+      assert.equal(bst.successor('x'), 'y');
+      assert.equal(bst.successor('y'), null);
+      assert.equal(bst.successor('z'), null);
+    });
+  });
+
+  describe("#predecessor", () => {
+    it ("should return a prepredecessor node", () => {
+      assert.equal(bst.predecessor('a'), null);
+      assert.equal(bst.predecessor('c'), 'a');
+      assert.equal(bst.predecessor('e'), 'c');
+      assert.equal(bst.predecessor('h'), 'e');
+      assert.equal(bst.predecessor('m'), 'h');
+      assert.equal(bst.predecessor('r'), 'm');
+      assert.equal(bst.predecessor('s'), 'r');
+      assert.equal(bst.predecessor('y'), 's');
+    });
+
+    it("should return a predecessor for phantom node", () => {
+      assert.equal(bst.predecessor('b'), 'a');
+      assert.equal(bst.predecessor('n'), 'm');
+      assert.equal(bst.predecessor('x'), 's');
+      assert.equal(bst.predecessor('a'), null);
     });
   });
 });

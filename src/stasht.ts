@@ -1,3 +1,3 @@
 
-import Tree from './binary-search-tree/Tree';
-export {Tree as BinarySearchTree};
+import BSTree from './binary-search/Tree';
+export {BSTree as BinarySearchTree};
