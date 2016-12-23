@@ -2,10 +2,9 @@
 import Node from './Node';
 
 /**
- * binary tree
- * @see simple example of using node size to keep a balanced binary tree
+ * balanced binary tree
  */
-export default class Tree<V>
+export default class Balanced<V>
 {
   /**
    * tree root
@@ -41,13 +40,16 @@ export default class Tree<V>
     return node;
   }
 
-  /**
-   * determine size of a node
-   * @param Node
-   * @return number
-   */
   private _nodeSize(node: Node<V>): number {
     return node ? node.size : 0;
+  }
+
+  public size(): number {
+    return this.root ? this.root.size : 0;
+  }
+
+  public reset(): void {
+    delete this.root;
   }
 }
   

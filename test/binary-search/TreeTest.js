@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require('chai').assert;
-const BinarySearchTree = require('./../lib/stasht').BinarySearchTree;
+const BinarySearchTree = require('./../../lib/stasht').BinarySearchTree;
 
 const bst = new BinarySearchTree();
 
@@ -217,50 +217,6 @@ describe("Binary Search Tree", () => {
     });
   });
 
-  describe("#json", () => {
-    it ("should return a valid JSON object", () => {
-      bst.put('whoop', 7);
-      const json = bst.json();
-      const str = JSON.stringify(json);
-      const obj = JSON.parse(str);
-      assert.isTrue(typeof obj === 'object');
-    });
-
-    it ("should return tree as an object", () => {
-      bst.put('whoop', 7);
-      const json = bst.json();
-      assert.equal(json.whoop, 7);
-    });
-
-    it ("should return object keys in order", () => {
-      const json = bst.json();
-      const keys = Object.keys(json);
-
-      assert.equal(keys.length, 8);
-      assert.equal(keys[0], 'a');
-      assert.equal(keys[2], 'e');
-    });
-  });
-
-  describe("#keys", () => {
-    it ("should return an array of keys", () => {
-      const keys = bst.keys();
-      assert.isTrue(Array.isArray(keys));
-    });
-
-    it ("should return all keys", () => {
-      const keys = bst.keys();
-      assert.equal(keys.length, 8);
-    });
-
-    it ("should return correct keys ordered", () => {
-      const keys = bst.keys();
-      assert.equal(keys[0], 'a');
-      assert.equal(keys[1], 'c');
-      assert.equal(keys[7], 'y');
-    });
-  });
-
   describe("#range", () => {
     it ("should return an array of keys", () => {
       const keys = bst.range();
@@ -322,6 +278,62 @@ describe("Binary Search Tree", () => {
       assert.equal(bst.predecessor('n'), 'm');
       assert.equal(bst.predecessor('x'), 's');
       assert.equal(bst.predecessor('a'), null);
+    });
+  });
+
+  describe("#inorder", () => {
+    it ("should return an array", () => {
+      assert.isTrue(Array.isArray(bst.inorder()));
+    });
+
+    it ("should return tree keys in order", () => {
+      const keys = bst.inorder();
+      assert.equal(keys.length, 8);
+      assert.equal(keys[0], 'a');
+      assert.equal(keys[2], 'e');
+      assert.equal(keys[7], 'y');
+    });
+  });
+
+  describe("#preorder", () => {
+    it ("should return an array", () => {
+      assert.isTrue(Array.isArray(bst.preorder()));
+    });
+
+    it ("should return tree keys in pre-order", () => {
+      const keys = bst.preorder();
+      assert.equal(keys.length, 8);
+      assert.equal(keys[0], 's');
+      assert.equal(keys[2], 'a');
+      assert.equal(keys[7], 'y');
+    });
+  });
+
+  describe("#postorder", () => {
+    it ("should return an array", () => {
+      assert.isTrue(Array.isArray(bst.postorder()));
+    });
+
+    it ("should return tree keys in post-order", () => {
+      const keys = bst.postorder();
+      assert.equal(keys.length, 8);
+      assert.equal(keys[0], 'c');
+      assert.equal(keys[2], 'm');
+      assert.equal(keys[7], 's');
+    });
+  });
+
+  describe("#levelorder", () => {
+    it ("should return an array", () => {
+      assert.isTrue(Array.isArray(bst.levelorder()));
+    });
+
+    it ("should return tree keys in level order", () => {
+      const keys = bst.levelorder();
+      assert.equal(keys.length, 8);
+      assert.equal(keys[0], 's');
+      assert.equal(keys[2], 'y');
+      assert.equal(keys[7], 'm');
     });
   });
 });

@@ -1,5 +1,6 @@
 
 import Node from './Node';
+import Queue from './../Queue';
 
 /**
  * binary search tree
@@ -13,7 +14,7 @@ export default class Tree<K, V>
   private root: Node<K,V>;
 
   /**
-   * add an item to the tree
+   * add an item to the tree - O(n)
    * @param key
    * @param value
    */
@@ -40,7 +41,7 @@ export default class Tree<K, V>
   }
 
   /**
-   * retrieve value from tree
+   * retrieve value from tree - O(n)
    * @param key
    * @return value
    */
@@ -64,7 +65,7 @@ export default class Tree<K, V>
   }
 
   /**
-   * Find a minimum key value
+   * Find a minimum key value - O(n)
    * @return key
    */
   min():K {
@@ -83,7 +84,7 @@ export default class Tree<K, V>
   }
 
   /**
-   * Find a maximum key value
+   * Find a maximum key value - O(n)
    * @return key
    */
   max():K {
@@ -102,7 +103,7 @@ export default class Tree<K, V>
   }
 
   /**
-   * round down to next key
+   * round down to next key - O(n)
    * @param key
    * @return key
    */
@@ -131,7 +132,9 @@ export default class Tree<K, V>
   }
 
   /**
-   * round up to next key
+   * round up to next key - O(n)
+   * @param key
+   * @return key
    */
   ceil(key:K): K {
     const node = this._ceil(this.root, key);
@@ -158,7 +161,9 @@ export default class Tree<K, V>
   }
 
   /**
-   * find key with <selection> smaller keys
+   * find key with <selection> smaller keys - O(n)
+   * @param int
+   * @return key
    */
   select(selection:number):K {
     const node = this._select(this.root, selection);
@@ -182,7 +187,9 @@ export default class Tree<K, V>
   }
 
   /**
-   * return number of keys less than rank
+   * return number of keys less than rank - O(n)
+   * @param key
+   * @return int
    */
   rank(rank:K): number {
     return this._rank(this.root, rank);
@@ -203,7 +210,7 @@ export default class Tree<K, V>
   }
 
   /**
-   * delete min key
+   * delete min key - O(n)
    */
   deleteMin(): void {
     this.root = this._deleteMin(this.root);
@@ -223,7 +230,7 @@ export default class Tree<K, V>
   }
 
   /**
-   * delete max key
+   * delete max key - O(n)
    */
   deleteMax(): void {
     this.root = this._deleteMax(this.root);
@@ -243,9 +250,8 @@ export default class Tree<K, V>
   }
 
   /**
-   * delete an item
+   * delete an item - O(n)
    * @param key
-   * @return boolean
    */
   delete(key:K): void {
     this.root = this._delete(this.root, key);
@@ -274,7 +280,7 @@ export default class Tree<K, V>
       return node.right;
     }
 
-    // let successor = this._min(node.right);
+    // @todo predecessor alternative
     let successor = this._successor(node, node.key);
     successor.right = this._deleteMin(successor);
     successor.left = node.left;
@@ -283,7 +289,9 @@ export default class Tree<K, V>
   }
 
   /**
-   * find the next largest node
+   * find the next largest node - O(n)
+   * @param key
+   * @return key
    */
   successor(key:K): K {
     const node = this._successor(this.root, key);
@@ -305,7 +313,9 @@ export default class Tree<K, V>
   }
 
   /**
-   * find the next smallest node
+   * find the next smallest node - O(n)
+   * @param key
+   * @return key
    */
   predecessor(key:K): K {
     const node = this._predecessor(this.root, key);
@@ -327,57 +337,58 @@ export default class Tree<K, V>
   }
 
   /**
-   * get size of tree
-   * @return number
+   * get size of tree - O(1)
+   * @return int
    */
   size(): number {
     return this.root ? this.root.size : 0;
   }
 
   /**
-   * reset the tree
+   * reset the tree - O(1)
    */
   reset():void {
     delete this.root;
   }
-
-  /**
-   * return an array of node keys
-   * @return array
-   */
-  keys(): Array<K> {
-    const data = this._inorderKeyTraversal(this.root, new Array<K>());
-    return data;
-  }
   
   /**
-   * return an array of node keys with a range
+   * determine the size of a node - O(1)
+   * @param Node
+   * @return number
+   */
+  private _nodeSize(node: Node<K,V>): number {
+    return node ? node.size : 0;
+  }
+
+  /**
+   * return an array of node keys within a range - O(n)
+   * @param key - start
+   * @param key - end
    * @return array
    */
   range(start?: K, end?: K): Array<K> {
-    const data = this._inorderKeyTraversal(this.root, new Array<K>(), start, end);
+    const data = this._range(this.root, new Array<K>(), start, end);
     return data;
   }
 
-  private _inorderKeyTraversal(node:Node<K,V>, data: Array<K>, start?:K, end?:K): Array<K> {
+  private _range(node:Node<K,V>, data: Array<K>, start?:K, end?:K): Array<K> {
     if (!node) {
       return data;
     }
 
-    // get all keys
+    // get all keys, in order traversal
     if (!start && !end) {
-      this._inorderKeyTraversal(node.left, data);
+      this._range(node.left, data);
       data.push(node.key);
-      this._inorderKeyTraversal(node.right, data);
+      this._range(node.right, data);
       return data;
     }
     
-    // only traverse necessary branches
+    // add keys within the range, in order
     if (!start || (node.key > start )) {
-      this._inorderKeyTraversal(node.left, data, start, end);
+      this._range(node.left, data, start, end);
     }
 
-    // store keys within range
     if ((start && end) && (node.key >= start && node.key <= end)) {
       data.push(node.key);
     } else if ((start && !end) && (node.key >= start)) {
@@ -387,40 +398,100 @@ export default class Tree<K, V>
     }
 
     if (!end || (node.key < end)) {
-      this._inorderKeyTraversal(node.right, data, start, end);
+      this._range(node.right, data, start, end);
     }
 
     return data;
   }
 
   /**
-   * object representation of tree, keys ordered ASC
-   * @return object
+   * in order traversal
+   * @return array
    */
-  json():Object {
-    return this._traverseJSON(this.root, new Object());
+  public inorder():Array<K> {
+    return this._inorder(this.root, new Array<K>());
   }
-  
-  // inorder traversal
-  private _traverseJSON(node:Node<K,V>, data: Object): Object {
+
+  private _inorder(node:Node<K,V>, data: Array<K>): Array<K> {
     if (!node) {
       return data;
     }
 
-    this._traverseJSON(node.left, data);
-    data[String(node.key)] = node.value;
-    this._traverseJSON(node.right, data);
+    this._inorder(node.left, data);
+    data.push(node.key);
+    this._inorder(node.right, data);
 
     return data;
   }
 
   /**
-   * determine size of a node
-   * @param Node
-   * @return number
+   * pre order traversal
+   * @return array
    */
-  private _nodeSize(node: Node<K,V>): number {
-    return node ? node.size : 0;
+  public preorder():Array<K> {
+    return this._preorder(this.root, new Array<K>());
+  }
+
+  private _preorder(node:Node<K,V>, data: Array<K>): Array<K> {
+    if (!node) {
+      return data;
+    }
+
+    data.push(node.key);
+    this._preorder(node.left, data);
+    this._preorder(node.right, data);
+    
+    return data;
+  }
+  
+  /**
+   * post order traversal
+   * @return array
+   */
+  public postorder():Array<K> {
+    return this._postorder(this.root, new Array<K>());
+  }
+
+  private _postorder(node:Node<K,V>, data: Array<K>): Array<K> {
+    if (!node) {
+      return data;
+    }
+
+    this._postorder(node.left, data);
+    this._postorder(node.right, data);
+    data.push(node.key);
+    
+    return data;
+  }
+
+  /**
+   * breadth first traversal
+   * @return array
+   */
+  public levelorder():Array<K> {
+    const q = new Queue<Node<K,V>>();
+    q.enqueue(this.root);
+    return this._levelorder(q, new Array<K>());
+  }
+
+  private _levelorder(q:Queue<Node<K,V>>, keys: Array<K>): Array<K> {
+    if (q.isEmpty()) {
+      return keys;
+    }
+
+    const node = q.dequeue();
+
+    if (node) {
+      keys.push(node.key);
+      if (node.left) {
+        q.enqueue(node.left);
+      }
+      if (node.right) {
+        q.enqueue(node.right);
+      }
+    }
+
+    return this._levelorder(q, keys);
   }
 }
   
