@@ -1,11 +1,10 @@
 
-import Node from './Node';
+import Node from "./Node";
 
 /**
  * balanced binary tree
  */
-export default class Balanced<V>
-{
+export default class Balanced<V> {
   /**
    * tree root
    * @type Node
@@ -16,15 +15,15 @@ export default class Balanced<V>
    * add an item to the tree
    * @param key
    */
-  put(value:V): void {
+  public put(value: V): void {
     this.root = this._put(this.root, value);
   }
 
-  private _put(node:Node<V>, value:V): Node<V> {
+  private _put(node: Node<V>, value: V): Node<V> {
     if (!node) {
       return new Node<V>(value);
     }
-     
+
     if (!node.left) {
       node.left = new Node<V>(value);
     } else if (!node.right) {
@@ -34,7 +33,7 @@ export default class Balanced<V>
     } else {
       node.left = this._put(node.left, value);
     }
-      
+
     node.size = this._nodeSize(node.left) + this._nodeSize(node.right) + 1;
 
     return node;
@@ -52,4 +51,3 @@ export default class Balanced<V>
     delete this.root;
   }
 }
-  

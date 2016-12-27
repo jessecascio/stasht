@@ -9,18 +9,16 @@
     "compile": "npm run compile:init && npm run compile:ts",
     "compile:init": "rm -rf lib && mkdir lib",
     "compile:ts": "tsc",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run lint && npm run test && npm run compile",
+    "lint": "tslint src/**/*.ts"
   },
   "author": "Jesse Cascio",
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.10.0",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-react": "^6.8.0",
-    "typescript": "^2.1.4",
-    "typescript-eslint-parser": "^1.0.0"
+    "ts-node": "^1.7.2",
+    "tslint": "^4.2.0",
+    "typescript": "^2.1.4"
   },
   "repository": {
     "type": "git",

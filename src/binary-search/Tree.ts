@@ -1,32 +1,31 @@
 
-import Node from './Node';
-import Queue from './../Queue';
+import Queue from "./../Queue";
+import Node from "./Node";
 
 /**
  * binary search tree
  */
-export default class Tree<K, V>
-{
+export default class Tree<K, V> {
   /**
    * tree root
    * @type Node
    */
-  private root: Node<K,V>;
+  private root: Node<K, V>;
 
   /**
    * add an item to the tree - O(n)
    * @param key
    * @param value
    */
-  put(key:K, value:V): void {
+  public put(key: K, value: V): void {
     this.root = this._put(this.root, key, value);
   }
 
-  private _put(node:Node<K,V>, key:K, value:V): Node<K,V> {
+  private _put(node: Node<K, V>, key: K, value: V): Node<K, V> {
     if (!node) {
-      return new Node<K,V>(key, value);
+      return new Node<K, V>(key, value);
     }
-     
+
     if (node.key > key) {
       node.left = this._put(node.left, key, value);
     } else if (node.key < key) {
@@ -45,12 +44,12 @@ export default class Tree<K, V>
    * @param key
    * @return value
    */
-  get(key:K): V {
+  public get(key: K): V {
     const node = this._get(this.root, key);
     return node ? node.value : null;
   }
 
-  private _get(node:Node<K,V>, key:K): Node<K,V> {
+  private _get(node: Node<K, V>, key: K): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -68,15 +67,15 @@ export default class Tree<K, V>
    * Find a minimum key value - O(n)
    * @return key
    */
-  min():K {
+  public min(): K {
     const node = this._min(this.root);
     return node ? node.key : null;
   }
 
-  private _min(node:Node<K,V>):Node<K,V> {
+  private _min(node: Node<K, V>): Node<K, V> {
     if (!node) {
       return null;
-    } else if(!node.left) {
+    } else if (!node.left) {
       return node;
     } else {
       return this._min(node.left);
@@ -87,15 +86,15 @@ export default class Tree<K, V>
    * Find a maximum key value - O(n)
    * @return key
    */
-  max():K {
+  public max(): K {
     const node = this._max(this.root);
     return node ? node.key : null;
   }
 
-  private _max(node:Node<K,V>): Node<K,V> {
+  private _max(node: Node<K, V>): Node<K, V> {
     if (!node ) {
       return null;
-    } else if(!node.right) {
+    } else if (!node.right) {
       return node;
     } else {
       return this._max(node.right);
@@ -107,12 +106,12 @@ export default class Tree<K, V>
    * @param key
    * @return key
    */
-  floor(key:K): K {
+  public floor(key: K): K {
     const node = this._floor(this.root, key);
     return node ? node.key : null;
   }
 
-  private _floor(node:Node<K,V>, key:K): Node<K,V> {
+  private _floor(node: Node<K, V>, key: K): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -136,12 +135,12 @@ export default class Tree<K, V>
    * @param key
    * @return key
    */
-  ceil(key:K): K {
+  public ceil(key: K): K {
     const node = this._ceil(this.root, key);
     return node ? node.key : null;
   }
 
-  private _ceil(node:Node<K,V>, key:K): Node<K,V> {
+  private _ceil(node: Node<K, V>, key: K): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -165,22 +164,22 @@ export default class Tree<K, V>
    * @param int
    * @return key
    */
-  select(selection:number):K {
+  public select(selection: number): K {
     const node = this._select(this.root, selection);
     return node ? node.key : null;
   }
 
-  private _select(node:Node<K,V>, selection: number):Node<K,V> {
+  private _select(node: Node<K, V>, selection: number): Node<K, V> {
     if (!node) {
       return null;
     }
 
     const size = this._nodeSize(node.left);
-    
+
     if (size > selection) {
       return this._select(node.left, selection);
     } else if (size < selection) {
-      return this._select(node.right, selection-size-1);
+      return this._select(node.right, selection - size - 1);
     } else {
       return node;
     }
@@ -191,11 +190,11 @@ export default class Tree<K, V>
    * @param key
    * @return int
    */
-  rank(rank:K): number {
+  public rank(rank: K): number {
     return this._rank(this.root, rank);
   }
 
-  private _rank(node: Node<K,V>, rank: K):number {
+  private _rank(node: Node<K, V>, rank: K): number {
     if (!node) {
       return 0;
     }
@@ -212,11 +211,11 @@ export default class Tree<K, V>
   /**
    * delete min key - O(n)
    */
-  deleteMin(): void {
+  public deleteMin(): void {
     this.root = this._deleteMin(this.root);
   }
 
-  private _deleteMin(node:Node<K,V>): Node<K,V> {
+  private _deleteMin(node: Node<K, V>): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -232,11 +231,11 @@ export default class Tree<K, V>
   /**
    * delete max key - O(n)
    */
-  deleteMax(): void {
+  public deleteMax(): void {
     this.root = this._deleteMax(this.root);
   }
 
-  private _deleteMax(node:Node<K,V>): Node<K,V> {
+  private _deleteMax(node: Node<K, V>): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -253,11 +252,11 @@ export default class Tree<K, V>
    * delete an item - O(n)
    * @param key
    */
-  delete(key:K): void {
+  public delete(key: K): void {
     this.root = this._delete(this.root, key);
   }
 
-  private _delete(node:Node<K,V>, key:K): Node<K,V> {
+  private _delete(node: Node<K, V>, key: K): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -293,12 +292,12 @@ export default class Tree<K, V>
    * @param key
    * @return key
    */
-  successor(key:K): K {
+  public successor(key: K): K {
     const node = this._successor(this.root, key);
     return node ? node.key : null;
   }
 
-  private _successor(node:Node<K,V>, key:K): Node<K,V> {
+  private _successor(node: Node<K, V>, key: K): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -317,12 +316,12 @@ export default class Tree<K, V>
    * @param key
    * @return key
    */
-  predecessor(key:K): K {
+  public predecessor(key: K): K {
     const node = this._predecessor(this.root, key);
     return node ? node.key : null;
   }
 
-  private _predecessor(node:Node<K,V>, key:K): Node<K,V> {
+  private _predecessor(node: Node<K, V>, key: K): Node<K, V> {
     if (!node) {
       return null;
     }
@@ -340,23 +339,23 @@ export default class Tree<K, V>
    * get size of tree - O(1)
    * @return int
    */
-  size(): number {
+  public size(): number {
     return this.root ? this.root.size : 0;
   }
 
   /**
    * reset the tree - O(1)
    */
-  reset():void {
+  public reset(): void {
     delete this.root;
   }
-  
+
   /**
    * determine the size of a node - O(1)
    * @param Node
    * @return number
    */
-  private _nodeSize(node: Node<K,V>): number {
+  private _nodeSize(node: Node<K, V>): number {
     return node ? node.size : 0;
   }
 
@@ -366,12 +365,12 @@ export default class Tree<K, V>
    * @param key - end
    * @return array
    */
-  range(start?: K, end?: K): Array<K> {
+  public range(start?: K, end?: K): K[] {
     const data = this._range(this.root, new Array<K>(), start, end);
     return data;
   }
 
-  private _range(node:Node<K,V>, data: Array<K>, start?:K, end?:K): Array<K> {
+  private _range(node: Node<K, V>, data: K[], start?: K, end?: K): K[] {
     if (!node) {
       return data;
     }
@@ -383,7 +382,7 @@ export default class Tree<K, V>
       this._range(node.right, data);
       return data;
     }
-    
+
     // add keys within the range, in order
     if (!start || (node.key > start )) {
       this._range(node.left, data, start, end);
@@ -392,9 +391,9 @@ export default class Tree<K, V>
     if ((start && end) && (node.key >= start && node.key <= end)) {
       data.push(node.key);
     } else if ((start && !end) && (node.key >= start)) {
-      data.push(node.key)
+      data.push(node.key);
     } else if ((!start && end) && (node.key <= end)) {
-      data.push(node.key)
+      data.push(node.key);
     }
 
     if (!end || (node.key < end)) {
@@ -408,11 +407,11 @@ export default class Tree<K, V>
    * in order traversal
    * @return array
    */
-  public inorder():Array<K> {
+  public inorder(): K[] {
     return this._inorder(this.root, new Array<K>());
   }
 
-  private _inorder(node:Node<K,V>, data: Array<K>): Array<K> {
+  private _inorder(node: Node<K, V>, data: K[]): K[] {
     if (!node) {
       return data;
     }
@@ -428,11 +427,11 @@ export default class Tree<K, V>
    * pre order traversal
    * @return array
    */
-  public preorder():Array<K> {
+  public preorder(): K[] {
     return this._preorder(this.root, new Array<K>());
   }
 
-  private _preorder(node:Node<K,V>, data: Array<K>): Array<K> {
+  private _preorder(node: Node<K, V>, data: K[]): K[] {
     if (!node) {
       return data;
     }
@@ -440,19 +439,19 @@ export default class Tree<K, V>
     data.push(node.key);
     this._preorder(node.left, data);
     this._preorder(node.right, data);
-    
+
     return data;
   }
-  
+
   /**
    * post order traversal
    * @return array
    */
-  public postorder():Array<K> {
+  public postorder(): K[] {
     return this._postorder(this.root, new Array<K>());
   }
 
-  private _postorder(node:Node<K,V>, data: Array<K>): Array<K> {
+  private _postorder(node: Node<K, V>, data: K[]): K[] {
     if (!node) {
       return data;
     }
@@ -460,7 +459,7 @@ export default class Tree<K, V>
     this._postorder(node.left, data);
     this._postorder(node.right, data);
     data.push(node.key);
-    
+
     return data;
   }
 
@@ -468,13 +467,13 @@ export default class Tree<K, V>
    * breadth first traversal
    * @return array
    */
-  public levelorder():Array<K> {
-    const q = new Queue<Node<K,V>>();
+  public levelorder(): K[] {
+    const q = new Queue<Node<K, V>>();
     q.enqueue(this.root);
     return this._levelorder(q, new Array<K>());
   }
 
-  private _levelorder(q:Queue<Node<K,V>>, keys: Array<K>): Array<K> {
+  private _levelorder(q: Queue<Node<K, V>>, keys: K[]): K[] {
     if (q.isEmpty()) {
       return keys;
     }
@@ -494,4 +493,3 @@ export default class Tree<K, V>
     return this._levelorder(q, keys);
   }
 }
-  
