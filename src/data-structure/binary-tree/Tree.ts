@@ -4,7 +4,7 @@ import Node from "./Node";
 /**
  * balanced binary tree
  */
-export default class Balanced<V> {
+export default class Tree<V> {
   /**
    * tree root
    * @type Node
