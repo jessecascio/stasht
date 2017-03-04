@@ -8,10 +8,10 @@ import SelectionSort from "./sort/Selection";
 export {SelectionSort as SelectionSort};
 import InsertionSort from "./sort/Insertion";
 export {InsertionSort as InsertionSort};
-import ShellSort from "./sort/Shell";
-export {ShellSort as ShellSort};
 import MergeSort from "./sort/Merge";
 export {MergeSort as MergeSort};
+import QuickSort from "./sort/Quick";
+export {QuickSort as QuickSort};
 
 // search
 import BinarySearch from "./search/BinarySearch";

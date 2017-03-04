@@ -1,6 +1,6 @@
 /**
- * Time Complexity: N^2 / 2
- * Space Complexity: 0(1)
+ * Time Complexity: 
+ * Space Complexity: O (1)
  */
 export default class Shell<V> {
 

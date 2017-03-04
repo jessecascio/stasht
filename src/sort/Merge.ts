@@ -1,6 +1,6 @@
 /**
- * Time Complexity: NlogN
- * Space Complexity:  N
+ * Time Complexity: O(NlogN)
+ * Space Complexity: O(N)
  */
 export default class Merge<V> {
 

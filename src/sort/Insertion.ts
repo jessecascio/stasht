@@ -1,6 +1,6 @@
 /**
- * Time Complexity: N^2 / 2
- * Space Complexity: 0(1)
+ * Time Complexity: O(N^2 / 4)
+ * Space Complexity: O(1)
  */
 export default class Insertion<V> {
 
