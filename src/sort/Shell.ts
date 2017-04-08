@@ -17,7 +17,7 @@ export default class Shell<V> {
 
     while (h >= 1 ) {
       for (let i = h; i < data.length; i++) {
- 
+
         for (let j = i; j >= h && data[(j - h)] >= data[j]; j -= h) {
           const pointer = data[(j - h)];
           data[(j - h)] = data[j];
