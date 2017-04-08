@@ -1,6 +1,6 @@
 {
   "name": "stasht",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "TypeScript Data Structures",
   "main": "lib/stasht",
   "scripts": {
