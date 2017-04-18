@@ -5,7 +5,7 @@
   "main": "lib/stasht",
   "scripts": {
     "mock": "ts-node src/mock.ts",
-    "test": "npm run compile && mocha --recursive test",
+    "test": "mocha --recursive test",
     "compile": "npm run compile:init && npm run compile:ts",
     "compile:init": "rm -rf lib && mkdir lib",
     "compile:ts": "tsc",
@@ -15,6 +15,7 @@
   "author": "Jesse Cascio",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^7.0.12",
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
     "ts-node": "^1.7.2",
@@ -24,8 +25,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/jessecascio/stasht"
-  },
-  "dependencies": {
-    "@types/node": "^7.0.5"
   }
 }
