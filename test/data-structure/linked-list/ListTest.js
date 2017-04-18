@@ -130,9 +130,20 @@ describe("Linked List", () => {
     });
   });
 
-  describe ("#empy", () => {
+  describe ("#empty", () => {
     it("should return true on empty", () => {
+       list = new LinkedList();
+       list.pushBack(14);
+       list.erase(14);
 
+       assert.isTrue(list.empty());
+    });
+
+    it("should return false on not-empty", () => {
+       list = new LinkedList();
+       list.pushBack(14);
+
+       assert.isFalse(list.empty());
     });
   });
 
