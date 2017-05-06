@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require("chai").assert;
-const BinarySearch = require("./../../lib/stasht").BinarySearch;
+const BinarySearch = require("./../../../lib/stasht").BinarySearch;
 
 let data = [];
 const bs = new BinarySearch();

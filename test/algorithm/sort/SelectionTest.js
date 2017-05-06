@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require("chai").assert;
-const Selection = require("./../../lib/stasht").SelectionSort;
+const Selection = require("./../../../lib/stasht").SelectionSort;
 
 describe("Selection Sort", () => {
   describe("#sort", () => {
